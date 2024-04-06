@@ -6,6 +6,12 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'username', 'email']
+    
+    def to_representation(self, instance):
+        if instance.is_superuser:
+        # If the user is a superuser, return an empty representation
+            return {}
+        return super().to_representation(instance)
 
 class ArtistSerializer(serializers.HyperlinkedModelSerializer):
     user = UserSerializer()
