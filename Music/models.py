@@ -1,7 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 # Create your models here.
+class Genre(models.Model):
+    pass
+
 class Artist(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     stage_name = models.CharField(max_length=100)
