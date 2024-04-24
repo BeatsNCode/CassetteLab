@@ -12,6 +12,6 @@ class ArtistAdmin(admin.ModelAdmin):
     inlines = [TrackInline]
 
 class TrackAdmin(admin.ModelAdmin):
-    list_display = ['title', 'artist', 'duration']
+    list_display = ['title', 'artist', 'genre', 'duration']
 
 admin.site.unregister(Group)

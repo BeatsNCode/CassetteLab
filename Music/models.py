@@ -14,7 +14,7 @@ class Artist(models.Model):
     stage_name = models.CharField(max_length=100)
     biography = models.TextField(blank=True)
     location = models.CharField(max_length=100)
-    genres = models.ManyToManyField(Genre, blank=True)
+    genres = models.ManyToManyField(Genre, default=list)
     
     def __str__(self):
         return self.stage_name
@@ -25,7 +25,7 @@ class Track(models.Model):
     audio_file = models.FileField(upload_to='tracks/')
     duration = models.DurationField()
     plays = models.IntegerField(default=0)
-    genre = models.ForeignKey(Genre, on_delete=models.CASCADE, blank=True)
+    genre = models.ForeignKey(Genre, on_delete=models.CASCADE, default='')
 
     def __str__(self):
         return self.title
@@ -34,9 +34,9 @@ class Album(models.Model):
     title = models.CharField(max_length=100)
     artist = models.ForeignKey(Artist, on_delete=models.CASCADE)
     release_date = models.DateField()
-    cover_art = models.ImageField(upload_to='album_covers/')
+    cover_art = models.ImageField(upload_to='album_covers/', blank=True)
     tracks = models.ManyToManyField(Track, blank=True)
-    genres = models.ManyToManyField(Genre, blank=True)
+    genres = models.ManyToManyField(Genre, default=list)
     
     def __str__(self):
         return self.title
@@ -55,7 +55,7 @@ class ExtendedPlaylist(models.Model):
     release_date = models.DateField()
     cover_art = models.ImageField(upload_to='playlist_covers/', blank=True)
     tracks = models.ManyToManyField(Track, blank=True)
-    genres = models.ManyToManyField(Genre, blank=True)
+    genres = models.ManyToManyField(Genre, default=list)
 
     def __str__(self):
         return self.title
