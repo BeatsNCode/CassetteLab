@@ -5,7 +5,7 @@ from rest_framework import serializers
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'username', 'email']
+        fields = ['id', 'username', 'email', 'password']
     
     def to_representation(self, instance):
         if instance.is_superuser:
@@ -18,4 +18,4 @@ class ArtistSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model= Artist
-        fields = ['id', 'user', 'stage_name', 'biography', 'location']
+        fields = ['id', 'user', 'stage_name', 'biography', 'location', 'genres']
