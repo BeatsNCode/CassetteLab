@@ -2,12 +2,12 @@ from django.conf import settings
 from .models import Artist
 from rest_framework import serializers
 
-User = settings.AUTH_USER_MODEL
+AppUser = settings.AUTH_USER_MODEL
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = User
-        fields = ['id', 'email', 'password']
+        model = AppUser
+        fields = ['id', 'username', 'email', 'password']
     
     def to_representation(self, instance):
         if instance.is_superuser:
