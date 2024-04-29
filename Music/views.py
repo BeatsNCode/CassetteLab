@@ -1,12 +1,14 @@
-from django.contrib.auth.models import User
+from django.conf import settings
 from rest_framework import permissions, viewsets
-from .models import Artist, Track
+from .models import AppUser, Artist, Track
 from .serializers import UserSerializer, ArtistSerializer
 from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
 from dj_rest_auth.registration.views import SocialLoginView
 
+# User = settings.AUTH_USER_MODEL
+
 class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all().order_by('-date_joined')
+    queryset = AppUser.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAuthenticated]
 

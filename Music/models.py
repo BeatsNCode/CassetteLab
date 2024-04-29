@@ -1,8 +1,24 @@
 from django.db import models
-from django.contrib.auth.models import User
 from django.utils import timezone
+from django.conf import settings
+from django.contrib.auth.models import AbstractUser
+from django.utils.translation import gettext as _
+from .managers import UserManager
+
 
 # Create your models here.
+class AppUser(AbstractUser):
+    email = models.EmailField(_('email address'), unique=True)
+    date_joined = models.DateTimeField(_('date joined'), auto_now_add=True)
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ('username',)
+
+    objects = UserManager()
+
+    def __str__(self):
+        return self.email
+   
+    
 class Genre(models.Model):
     genre = models.CharField(max_length=100, default='')
 
@@ -10,7 +26,7 @@ class Genre(models.Model):
         return self.genre
 
 class Artist(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(AppUser, on_delete=models.CASCADE)
     stage_name = models.CharField(max_length=100)
     biography = models.TextField(blank=True)
     location = models.CharField(max_length=100)
