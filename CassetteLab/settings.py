@@ -17,7 +17,16 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
-AUTH_USER_MODEL = "Music.AppUser"
+AUTH_USER_MODEL = 'Music.AppUser'
+ACCOUNT_EMAIL_VERIFICATION = "none"
+# ACCOUNT_AUTHENTICATION_METHOD = 'email'
+# ACCOUNT_EMAIL_REQUIRED = True
+# ACCOUNT_UNIQUE_EMAIL = True
+
+# AUTHENTICATION_BACKENDS = (
+#     'django.contrib.auth.backends.ModelBackend',
+#     'accounts.backends.EmailBackend',  
+# )
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
