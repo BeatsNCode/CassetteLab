@@ -9,10 +9,9 @@ from .managers import UserManager
 # Create your models here.
 class AppUser(AbstractUser):
     email = models.EmailField(_('email address'), unique=True)
-    username = models.CharField(max_length=100)
     date_joined = models.DateTimeField(_('date joined'), auto_now_add=True)
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ('username',)
+    REQUIRED_FIELDS = []
 
     objects = UserManager()
 
