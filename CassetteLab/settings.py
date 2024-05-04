@@ -19,9 +19,10 @@ ALLOWED_HOSTS = []
 # Application definition
 AUTH_USER_MODEL = 'Music.AppUser'
 ACCOUNT_EMAIL_VERIFICATION = "none"
-# ACCOUNT_AUTHENTICATION_METHOD = 'email'
-# ACCOUNT_EMAIL_REQUIRED = True
-# ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_AUTHENTICATION_METHOD = "email"
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USERNAME_REQUIRED = False
 
 # AUTHENTICATION_BACKENDS = (
 #     'django.contrib.auth.backends.ModelBackend',
@@ -46,16 +47,25 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
     'rest_framework',
     'rest_framework.authtoken',
     'dj_rest_auth',
-    'django.contrib.sites',
+    # 'django.contrib.sites',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'dj_rest_auth.registration',
     'allauth.socialaccount.providers.google',
 ]
+
+CORS_ALLOWED_ORIGINS = [
+    'http://127.0.0.1:5173', 
+]
+
+CORS_ORIGIN_WHITELIST = (
+    'http://127.0.0.1:5173',
+)
 
 SITE_ID = 1
 
@@ -69,6 +79,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'allauth.account.middleware.AccountMiddleware',
+    'corsheaders.middleware.CorsMiddleware'
 ]
 
 ROOT_URLCONF = 'CassetteLab.urls'
