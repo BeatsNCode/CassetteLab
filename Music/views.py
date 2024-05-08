@@ -7,6 +7,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import RedirectView
 from dj_rest_auth.registration.views import SocialLoginView
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from dj_rest_auth.views import LoginView as RestAuthLoginView
+from django.http import JsonResponse
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -29,6 +31,15 @@ class GoogleLoginView(SocialLoginView):
     callback_url = "http://127.0.0.1:8000"
     client_class = OAuth2Client
     
+
+class CustomLoginView(RestAuthLoginView):
+    def post(self, request, *args, **kwargs):
+        response = super().post(request, *args, **kwargs)
+        if response.status_code == 200:
+            # Assuming authentication is successful
+            # Set HTTP-only cookie with the authentication token
+            response.set_cookie('auth_token', response.data['key'], httponly=True)
+        return response
 
 class UserRedirectView(LoginRequiredMixin, RedirectView):
     """
