@@ -40,10 +40,10 @@ REST_FRAMEWORK = {
 
 REST_AUTH = {
     'USE_JWT': True,
-    'JWT_AUTH_HTTPONLY': False,
     # 'JWT_AUTH_SECURE': True
     'JWT_AUTH_COOKIE': 'CLab_access',
-    'JWT_AUTH_REFRESH_COOKIE': 'CLab_refresh'
+    'JWT_AUTH_REFRESH_COOKIE': 'CLab_refresh',
+    'JWT_AUTH_COOKIE_USE_CSRF': True,
 }
 
 SIMPLE_JWT = {
@@ -74,6 +74,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     
 ]
+CORS_ALLOW_CREDENTIALS = True
 
 CORS_ALLOWED_ORIGINS = [
     'http://127.0.0.1:5173', 
