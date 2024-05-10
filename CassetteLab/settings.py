@@ -14,7 +14,7 @@ SECRET_KEY = 'django-insecure-z7lmoo0jqu&az8#e6&nn4zh=m*$##uk(i=jm3nc$-xgbi(@0$$
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'cassette-lab.com']
 
 
 # Application definition
@@ -53,7 +53,24 @@ SIMPLE_JWT = {
      'BLACKLIST_AFTER_ROTATION': True
 }
 
+CORS_ALLOWED_ORIGINS = [
+    'http://127.0.0.1:5173',
+    'http://localhost:5173'
+]
+
+CORS_ALLOW_ALL_ORIGINS = False
+
+CORS_ORIGIN_WHITELIST = (
+    'http://127.0.0.1:5173',
+    'http://localhost:5173'
+)
+
+CORS_ALLOW_CREDENTIALS = True
+
+
+
 INSTALLED_APPS = [
+    'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
     'Music.apps.MusicConfig',
@@ -61,7 +78,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'corsheaders',
     'rest_framework',
     'rest_framework.authtoken',
     'rest_framework_simplejwt',
@@ -74,20 +90,13 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     
 ]
-CORS_ALLOW_CREDENTIALS = True
 
-CORS_ALLOWED_ORIGINS = [
-    'http://127.0.0.1:5173', 
-]
-
-CORS_ORIGIN_WHITELIST = (
-    'http://127.0.0.1:5173',
-)
 
 SITE_ID = 1
 
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -96,7 +105,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'allauth.account.middleware.AccountMiddleware',
-    'corsheaders.middleware.CorsMiddleware'
 ]
 
 ROOT_URLCONF = 'CassetteLab.urls'
