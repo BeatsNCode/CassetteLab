@@ -1,4 +1,5 @@
 from pathlib import Path
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -13,7 +14,7 @@ SECRET_KEY = 'django-insecure-z7lmoo0jqu&az8#e6&nn4zh=m*$##uk(i=jm3nc$-xgbi(@0$$
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'cassette-lab.com']
 
 
 # Application definition
@@ -30,16 +31,46 @@ ACCOUNT_USERNAME_REQUIRED = False
 # )
 
 REST_FRAMEWORK = {
+
+    'DEFAULT_AUTHENTICATION_CLASS': 'rest_framework_simplejwt.authentication.JWTAuthentication',
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 20
 }
 
+
 REST_AUTH = {
     'USE_JWT': True,
-    'JWT_AUTH_COOKIE': 'jwt-auth',
+    # 'JWT_AUTH_SECURE': True
+    'JWT_AUTH_COOKIE': 'CLab_access',
+    'JWT_AUTH_REFRESH_COOKIE': 'CLab_refresh',
+    'JWT_AUTH_COOKIE_USE_CSRF': True,
 }
 
+SIMPLE_JWT = {
+     'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
+     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
+     'ROTATE_REFRESH_TOKENS': True,
+     'BLACKLIST_AFTER_ROTATION': True
+}
+
+CORS_ALLOWED_ORIGINS = [
+    'http://127.0.0.1:5173',
+    'http://localhost:5173'
+]
+
+CORS_ALLOW_ALL_ORIGINS = False
+
+CORS_ORIGIN_WHITELIST = (
+    'http://127.0.0.1:5173',
+    'http://localhost:5173'
+)
+
+CORS_ALLOW_CREDENTIALS = True
+
+
+
 INSTALLED_APPS = [
+    'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
     'Music.apps.MusicConfig',
@@ -47,9 +78,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'corsheaders',
     'rest_framework',
     'rest_framework.authtoken',
+    'rest_framework_simplejwt',
     'dj_rest_auth',
     # 'django.contrib.sites',
     'allauth',
@@ -57,20 +88,15 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'dj_rest_auth.registration',
     'allauth.socialaccount.providers.google',
+    
 ]
 
-CORS_ALLOWED_ORIGINS = [
-    'http://127.0.0.1:5173', 
-]
-
-CORS_ORIGIN_WHITELIST = (
-    'http://127.0.0.1:5173',
-)
 
 SITE_ID = 1
 
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -79,7 +105,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'allauth.account.middleware.AccountMiddleware',
-    'corsheaders.middleware.CorsMiddleware'
 ]
 
 ROOT_URLCONF = 'CassetteLab.urls'
