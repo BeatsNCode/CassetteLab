@@ -7,13 +7,14 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 
-
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
-router.register(r'Artists', views.ArtistViewSet)
+router.register(r'artists', views.ArtistViewSet)
+router.register(r'artist', views.ArtistProfileViewSet, basename='account')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('dj-rest-auth/', include('dj_rest_auth.urls')),

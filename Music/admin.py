@@ -13,7 +13,7 @@ class UserAdmin(UserAdmin):
     model = AppUser
 
     list_display = ('email', 'is_active',
-                    'is_staff', 'is_superuser', 'last_login',)
+                    'is_staff', 'is_superuser', 'last_login', 'visits',)
     list_filter = ('is_active', 'is_staff', 'is_superuser')
     fieldsets = (
         (None, {'fields': ('email', 'password')}),

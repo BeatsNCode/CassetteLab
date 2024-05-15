@@ -8,8 +8,8 @@ from django.views.generic import RedirectView
 from dj_rest_auth.registration.views import SocialLoginView
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from dj_rest_auth.views import LoginView as RestAuthLoginView
-from django.http import JsonResponse
 
+from django.http import JsonResponse
 
 class UserViewSet(viewsets.ModelViewSet):
 
@@ -18,12 +18,21 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = AppUser.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
 
-class ArtistViewSet(viewsets.ModelViewSet):
 
+class ArtistViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAdminUser]
-    
+
     queryset = Artist.objects.all().order_by('stage_name')
     serializer_class = ArtistSerializer
+
+
+class ArtistProfileViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
+    serializer_class = ArtistSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        return Artist.objects.filter(user=user)
 
 class GoogleLoginView(SocialLoginView):
 
@@ -50,3 +59,4 @@ class UserRedirectView(LoginRequiredMixin, RedirectView):
 
     def get_redirect_url(self):
         return "redirect-url"
+    
