@@ -7,7 +7,7 @@ AppUser = settings.AUTH_USER_MODEL
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = AppUser
-        fields = ['id', 'email', 'password']
+        fields = ['id', 'email', 'password', 'visits']
     
     def to_representation(self, instance):
         if instance.is_superuser:
@@ -16,8 +16,8 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         return super().to_representation(instance)
 
 class ArtistSerializer(serializers.HyperlinkedModelSerializer):
-    user = UserSerializer()
+    user = UserSerializer
 
     class Meta:
         model= Artist
-        fields = ['id', 'user', 'stage_name', 'location', 'genres']
+        fields = ['id', 'user', 'stage_name', 'location', 'genres', ]

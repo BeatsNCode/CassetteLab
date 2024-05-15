@@ -67,8 +67,6 @@ CORS_ORIGIN_WHITELIST = (
 
 CORS_ALLOW_CREDENTIALS = True
 
-
-
 INSTALLED_APPS = [
     'corsheaders',
     'django.contrib.admin',

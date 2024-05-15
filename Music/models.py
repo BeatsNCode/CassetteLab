@@ -12,11 +12,16 @@ class AppUser(AbstractUser):
     email = models.EmailField(_('email address'), unique=True)
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
+    visits = models.PositiveIntegerField(default=0)
 
     objects = UserManager()
 
     def __str__(self):
         return self.username
+    
+    def increment_visits(self):
+        self.visits += 1
+        self.save()
    
 class Genre(models.Model):
     genre = models.CharField(max_length=50, blank=True)
