@@ -16,7 +16,6 @@ router.register(r'tracks', views.TracksViewset, basename='tracks')
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(router.urls)),
-    path('artists/<int:pk>/tracks/', views.TracksByArtistViewSet.as_view({'get': 'list'}), name='artist-tracks'),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('dj-rest-auth/', include('dj_rest_auth.urls')),
     path('dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')),
