@@ -1,5 +1,5 @@
 from django.conf import settings
-from .models import Artist
+from .models import Artist, Track
 from rest_framework import serializers
 
 AppUser = settings.AUTH_USER_MODEL
@@ -20,4 +20,11 @@ class ArtistSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model= Artist
-        fields = ['id', 'user', 'stage_name', 'location', 'genres', ]
+        fields = ['id', 'user', 'stage_name', 'location', 'genres',]
+
+class TrackSerializer(serializers.HyperlinkedModelSerializer):
+    user = ArtistSerializer
+
+    class Meta:
+        model=Track
+        fields = ['title', 'artist', 'audio_file', 'duration', 'plays', ]
