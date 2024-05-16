@@ -20,11 +20,13 @@ class ArtistSerializer(serializers.ModelSerializer):
 
     class Meta:
         model= Artist
-        fields = ['id', 'user', 'stage_name', 'location', 'genres',]
+        fields = ['user', 'stage_name', 'location', 'genres',]
 
 class TrackSerializer(serializers.ModelSerializer):
-    user = ArtistSerializer
+    artist = serializers.CharField(source='artist.stage_name')
+    
 
     class Meta:
         model=Track
-        fields = ['title', 'artist', 'audio_file', 'duration', 'plays', ]
+        fields = ['id', 'user','title', 'artist', 'audio_file', 'duration', 'plays', ]
+

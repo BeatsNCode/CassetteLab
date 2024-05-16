@@ -12,6 +12,8 @@ router.register(r'users', views.UserViewSet)
 router.register(r'artists', views.ArtistViewSet)
 router.register(r'artist', views.ArtistProfileViewSet, basename='account')
 router.register(r'tracks', views.TracksViewset, basename='tracks')
+router.register(r'track', views.TrackViewSet, basename='track')
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
