@@ -7,7 +7,7 @@ AppUser = settings.AUTH_USER_MODEL
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = AppUser
-        fields = ['id', 'email', 'password', 'visits']
+        fields = ['id', 'email']
     
     def to_representation(self, instance):
         if instance.is_superuser:
@@ -15,16 +15,18 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
             return {}
         return super().to_representation(instance)
 
-class ArtistSerializer(serializers.HyperlinkedModelSerializer):
+class ArtistSerializer(serializers.ModelSerializer):
     user = UserSerializer
 
     class Meta:
         model= Artist
-        fields = ['id', 'user', 'stage_name', 'location', 'genres',]
+        fields = ['user', 'stage_name', 'location', 'genres',]
 
-class TrackSerializer(serializers.HyperlinkedModelSerializer):
-    user = ArtistSerializer
+class TrackSerializer(serializers.ModelSerializer):
+    artist = serializers.CharField(source='artist.stage_name')
+    
 
     class Meta:
         model=Track
-        fields = ['title', 'artist', 'audio_file', 'duration', 'plays', ]
+        fields = ['id', 'user','title', 'artist', 'audio_file', 'duration', 'plays', ]
+

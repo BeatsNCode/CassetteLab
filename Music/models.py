@@ -39,12 +39,14 @@ class Artist(models.Model):
         return self.stage_name
 
 class Track(models.Model):
+    user = models.ForeignKey(AppUser, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     artist = models.ForeignKey(Artist, on_delete=models.CASCADE)
     audio_file = models.FileField(upload_to='tracks/')
     duration = models.DurationField(blank=True, null=True)
     plays = models.IntegerField(default=0)
     genre = models.TextField(blank=True)
+
 
     def __str__(self):
         return self.title

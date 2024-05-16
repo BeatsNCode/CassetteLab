@@ -12,11 +12,12 @@ router.register(r'users', views.UserViewSet)
 router.register(r'artists', views.ArtistViewSet)
 router.register(r'artist', views.ArtistProfileViewSet, basename='account')
 router.register(r'tracks', views.TracksViewset, basename='tracks')
+router.register(r'track', views.TrackViewSet, basename='track')
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(router.urls)),
-    path('artists/<int:pk>/tracks/', views.TracksByArtistViewSet.as_view({'get': 'list'}), name='artist-tracks'),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('dj-rest-auth/', include('dj_rest_auth.urls')),
     path('dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')),

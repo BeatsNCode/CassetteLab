@@ -8,6 +8,7 @@ from django.views.generic import RedirectView
 from dj_rest_auth.registration.views import SocialLoginView
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from dj_rest_auth.views import LoginView as RestAuthLoginView
+from django.shortcuts import get_object_or_404
 
 from django.http import JsonResponse
 
@@ -41,6 +42,10 @@ class TracksViewset(viewsets.ModelViewSet):
     queryset = Track.objects.all().order_by('title')
     serializer_class = TrackSerializer
 
+    def get_queryset(self):
+        user = self.request.user
+        return Track.objects.filter(user=user).order_by('title')
+
 
 class TracksByArtistViewSet(viewsets.ModelViewSet):
 
@@ -49,7 +54,23 @@ class TracksByArtistViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
+        return Track.objects.filter(user=user).order_by('title')
+    
+class TrackViewSet(viewsets.ModelViewSet):
+
+    permission_classes = [IsAuthenticated]
+    serializer_class = TrackSerializer
+
+    def get_queryset(self):
+        user = self.request.user
         return Track.objects.filter(user=user)
+    
+    def get_object(self):
+        queryset = self.get_queryset()
+        stage_name = self.kwargs.get("stage_name")  # Assuming you're passing the artist_id in the URL
+        track_id = self.kwargs.get("id")  # Assuming you're passing the track_id in the URL
+        track = get_object_or_404(queryset, artist_id=stage_name, id=track_id)
+        return track
     
 
 class GoogleLoginView(SocialLoginView):
