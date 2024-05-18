@@ -50,6 +50,7 @@ class TracksViewset(viewsets.ModelViewSet):
 class TracksByArtistViewSet(viewsets.ModelViewSet):
 
     permission_classes = [IsAuthenticated]
+    queryset = Track.objects.all().order_by('title')
     serializer_class = TrackSerializer
 
     def get_queryset(self):
