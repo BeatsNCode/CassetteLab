@@ -17,11 +17,13 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         return super().to_representation(instance)
 
 class ArtistSerializer(serializers.ModelSerializer):
-    user_id = serializers.IntegerField(source='id', read_only=True)
+    # user_id = serializers.IntegerField(source='user', read_only=True)
+    user = UserSerializer
 
     class Meta:
         model= Artist
-        fields = ['user_id','stage_name', 'location', 'genres',]
+
+        fields = ['user', 'stage_name', 'location', 'genres',]
 
 class TrackSerializer(serializers.ModelSerializer):
     user = ArtistSerializer

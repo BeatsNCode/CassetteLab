@@ -9,7 +9,6 @@ from dj_rest_auth.registration.views import SocialLoginView
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from dj_rest_auth.views import LoginView as RestAuthLoginView
 from django.shortcuts import get_object_or_404
-
 from django.http import JsonResponse
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -18,13 +17,11 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = AppUser.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
 
-
 class ArtistViewSet(viewsets.ModelViewSet):
 
     permission_classes = [IsAdminUser]
     queryset = Artist.objects.all().order_by('stage_name')
     serializer_class = ArtistSerializer
-
 
 class ArtistProfileViewSet(viewsets.ModelViewSet):
 
@@ -34,7 +31,6 @@ class ArtistProfileViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         user = self.request.user
         return Artist.objects.filter(user=user)
-    
     
 class TracksViewset(viewsets.ModelViewSet):
 
@@ -86,7 +82,7 @@ class CustomLoginView(RestAuthLoginView):
         if response.status_code == 200:
             # Assuming authentication is successful
             # Set HTTP-only cookie with the authentication token
-            response.set_cookie('auth_token', response.data['key'], httponly=True)
+            response.set_cookie('auth_token', response.data['key'], httponly=False)
         return response
 
 
