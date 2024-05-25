@@ -27,12 +27,15 @@ ACCOUNT_USERNAME_REQUIRED = False
 
 # AUTHENTICATION_BACKENDS = (
 #     'django.contrib.auth.backends.ModelBackend',
-#     'accounts.backends.EmailBackend',  
+#     # 'accounts.backends.EmailBackend',  
 # )
 
 REST_FRAMEWORK = {
 
-    'DEFAULT_AUTHENTICATION_CLASS': 'rest_framework_simplejwt.authentication.JWTAuthentication',
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
+    ),
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 20
 }
@@ -40,9 +43,10 @@ REST_FRAMEWORK = {
 REST_AUTH = {
     'USE_JWT': True,
     # 'JWT_AUTH_SECURE': True
-    'JWT_AUTH_COOKIE': 'CLab_access',
-    'JWT_AUTH_REFRESH_COOKIE': 'CLab_refresh',
+    'JWT_AUTH_COOKIE': 'CLToken',
+    'JWT_AUTH_REFRESH_COOKIE': 'CLRefresh',
     'JWT_AUTH_COOKIE_USE_CSRF': True,
+    'JWT_AUTH_HTTPONLY': True
 }
 
 SIMPLE_JWT = {
@@ -52,19 +56,12 @@ SIMPLE_JWT = {
      'BLACKLIST_AFTER_ROTATION': True
 }
 
+CORS_ALLOW_CREDENTIALS = True
+
 CORS_ALLOWED_ORIGINS = [
     'http://127.0.0.1:5173',
-    'http://localhost:5173'
+    'http://localhost:5173',
 ]
-
-CORS_ALLOW_ALL_ORIGINS = False
-
-CORS_ORIGIN_WHITELIST = (
-    'http://127.0.0.1:5173',
-    'http://localhost:5173'
-)
-
-CORS_ALLOW_CREDENTIALS = True
 
 INSTALLED_APPS = [
     'corsheaders',
@@ -88,16 +85,15 @@ INSTALLED_APPS = [
     
 ]
 
-
 SITE_ID = 1
 
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
