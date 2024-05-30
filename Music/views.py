@@ -24,7 +24,7 @@ class ArtistViewSet(viewsets.ModelViewSet):
     serializer_class = ArtistSerializer
 
 class ArtistProfileViewSet(viewsets.ModelViewSet):
-
+    
     permission_classes = [IsAuthenticated]
     serializer_class = ArtistSerializer
 
