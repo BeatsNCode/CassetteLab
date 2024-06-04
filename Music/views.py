@@ -27,6 +27,7 @@ class ArtistProfileViewSet(viewsets.ModelViewSet):
     
     permission_classes = [IsAuthenticated]
     serializer_class = ArtistSerializer
+    lookup_field = 'user'
 
     def get_queryset(self):
         user = self.request.user
