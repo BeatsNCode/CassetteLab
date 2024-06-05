@@ -51,8 +51,12 @@ REST_AUTH = {
     'JWT_AUTH_COOKIE': 'CLToken',
     'JWT_AUTH_REFRESH_COOKIE': 'CLRefresh',
     'JWT_AUTH_COOKIE_USE_CSRF': True,
-    'JWT_AUTH_HTTPONLY': True
+    'JWT_AUTH_HTTPONLY': True,
+    'OLD_PASSWORD_FIELD_ENABLED' : True,
+    'LOGOUT_ON_PASSWORD_CHANGE' : False
 }
+
+
 
 SIMPLE_JWT = {
      'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
