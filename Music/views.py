@@ -10,12 +10,34 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from dj_rest_auth.views import LoginView as RestAuthLoginView
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
+from django.contrib.auth import get_user_model
+
+AppUser = get_user_model()
 
 class UserViewSet(viewsets.ModelViewSet):
 
     permission_classes = [IsAdminUser]
     queryset = AppUser.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
+
+class UserUpdateView(viewsets.ModelViewSet):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = UserSerializer
+    lookup_field = 'pk'  # Use primary key for lookup
+
+    def get_queryset(self):
+        # Ensure the queryset is filtered by the authenticated user
+        return AppUser.objects.filter(pk=self.request.user.pk)
+
+    def update(self, request, pk=None):
+        # Get the user object using the primary key
+        user = self.get_object()
+        serializer = self.get_serializer(user, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse({'message': 'User updated successfully'})
+        return JsonResponse(serializer.errors, status=400)
+        
 
 class ArtistViewSet(viewsets.ModelViewSet):
 

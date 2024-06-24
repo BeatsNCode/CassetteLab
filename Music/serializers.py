@@ -1,8 +1,8 @@
-from django.conf import settings
+from django.contrib.auth import get_user_model
 from .models import Artist, Track
 from rest_framework import serializers
 
-AppUser = settings.AUTH_USER_MODEL
+AppUser = get_user_model()
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
@@ -15,6 +15,18 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         # If the user is a superuser, return an empty representation
             return {}
         return super().to_representation(instance)
+    
+class UserEmailUpdateSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField()
+
+    class Meta:
+        model = AppUser
+        fields = ['pk', 'email']
+
+    def update(self, instance, validated_data):
+        instance.email = validated_data.get('email', instance.email)
+        instance.save()
+        return instance
 
 class ArtistSerializer(serializers.ModelSerializer):
     # user_id = serializers.IntegerField(source='user', read_only=True)

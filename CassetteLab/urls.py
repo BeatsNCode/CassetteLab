@@ -19,6 +19,7 @@ urlpatterns = [
     path('', include(router.urls)),
     path('tracks/<int:track_id>/', views.TrackViewSet.as_view({'get': 'retrieve'}), name='track-detail'),
     path('artist/<int:user>/', views.ArtistProfileViewSet.as_view({'get': 'retrieve'}), name='artist-detail'),
+    path('user/update/<int:pk>/', views.UserUpdateView.as_view({'put': 'update'}), name='user-update'),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('dj-rest-auth/', include('dj_rest_auth.urls')),
     path('dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')),
