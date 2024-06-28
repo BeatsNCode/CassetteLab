@@ -2,6 +2,8 @@ from django.contrib.auth import get_user_model
 from .models import Artist, Track
 from rest_framework import serializers
 
+
+
 AppUser = get_user_model()
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -46,4 +48,5 @@ class TrackSerializer(serializers.ModelSerializer):
     class Meta:
         model=Track
         fields = ['track_id', 'title', 'stage_name', 'audio_file', 'duration', 'plays',]
+
 

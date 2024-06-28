@@ -1,6 +1,6 @@
 from django.urls import path, re_path
 from dj_rest_auth.registration.views import RegisterView, VerifyEmailView
-from dj_rest_auth.views import LoginView, LogoutView
+from dj_rest_auth.views import LoginView, LogoutView, PasswordResetView
 from Music.views import GoogleLoginView, UserRedirectView, ArtistViewSet
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,

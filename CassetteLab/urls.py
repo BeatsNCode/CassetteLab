@@ -6,7 +6,7 @@ from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
-
+from dj_rest_auth.views import PasswordResetView
 
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
@@ -25,4 +25,6 @@ urlpatterns = [
     path('dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('accounts/', include('allauth.urls')),  
+    path('auth/', include('django.contrib.auth.urls')),  
 ]

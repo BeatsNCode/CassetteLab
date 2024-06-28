@@ -21,7 +21,7 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
 
 class UserUpdateView(viewsets.ModelViewSet):
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     serializer_class = UserSerializer
     lookup_field = 'pk'  # Use primary key for lookup
 

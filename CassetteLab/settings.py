@@ -53,7 +53,11 @@ REST_AUTH = {
     'JWT_AUTH_COOKIE_USE_CSRF': True,
     'JWT_AUTH_HTTPONLY': True,
     'OLD_PASSWORD_FIELD_ENABLED' : True,
-    'LOGOUT_ON_PASSWORD_CHANGE' : False
+    'LOGOUT_ON_PASSWORD_CHANGE' : False,
+    'PASSWORD_RESET_SERIALIZER': 'dj_rest_auth.serializers.PasswordResetSerializer',
+    'PASSWORD_RESET_CONFIRM_SERIALIZER': 'dj_rest_auth.serializers.PasswordResetConfirmSerializer',
+    'PASSWORD_CHANGE_SERIALIZER': 'dj_rest_auth.serializers.PasswordChangeSerializer',
+
 }
 
 
@@ -129,6 +133,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'CassetteLab.wsgi.application'
 
+
+SENDGRID_API_KEY = os.getenv('SENDGRID_API_KEY')
+
+EMAIL_BACKEND = 'sendgrid_backend.SendgridBackend'
+DEFAULT_FROM_EMAIL = 'info@cassette-lab.com'
+SENDGRID_SANDBOX_MODE_IN_DEBUG = False
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
