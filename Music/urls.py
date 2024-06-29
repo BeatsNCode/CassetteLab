@@ -14,8 +14,8 @@ urlpatterns = [
     path("~redirect/", view=UserRedirectView.as_view(), name="redirect"),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('register/', RegisterView.as_view()),
-    path('login/', LoginView.as_view()),
+    # path('register/', RegisterView.as_view()),
+    # path('login/', LoginView.as_view()),
 
     # path('logout/', LogoutView.as_view()),
     # path('verify-email/', VerifyEmailView.as_view(), name='rest_verify_email'),

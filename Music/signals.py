@@ -22,8 +22,14 @@ def password_reset_token_created(sender, instance, reset_password_token, *args, 
     """
 
     user_email = reset_password_token.user.email
-    reset_password_url = "{}?token={}".format(
-        instance.request.build_absolute_uri(reverse('password_reset:reset-password-confirm')),
+    
+    # reset_password_url = "{}?token={}".format(
+    #     instance.request.build_absolute_uri(reverse('password_reset:reset-password-confirm')),
+    #     reset_password_token.key
+    # )
+
+    reset_password_redirect_url = "{}?token={}".format(
+        'http://localhost:5173/password-reset/confirm',
         reset_password_token.key
     )
 
@@ -42,7 +48,7 @@ def password_reset_token_created(sender, instance, reset_password_token, *args, 
         )
         msg.template_id = "d-5ac6ba54547740aab7b7713362e4e34a"
         msg.dynamic_template_data = {
-            "reset_password_url": reset_password_url
+            "reset_password_url": reset_password_redirect_url
         }
         msg.send(fail_silently=False)
 
