@@ -29,10 +29,6 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_USERNAME_REQUIRED = False
 
-# AUTHENTICATION_BACKENDS = (
-#     'django.contrib.auth.backends.ModelBackend',
-#     # 'accounts.backends.EmailBackend',  
-# )
 
 REST_FRAMEWORK = {
 
@@ -54,13 +50,9 @@ REST_AUTH = {
     'JWT_AUTH_HTTPONLY': True,
     'OLD_PASSWORD_FIELD_ENABLED' : True,
     'LOGOUT_ON_PASSWORD_CHANGE' : False,
-    'PASSWORD_RESET_SERIALIZER': 'dj_rest_auth.serializers.PasswordResetSerializer',
-    'PASSWORD_RESET_CONFIRM_SERIALIZER': 'dj_rest_auth.serializers.PasswordResetConfirmSerializer',
     'PASSWORD_CHANGE_SERIALIZER': 'dj_rest_auth.serializers.PasswordChangeSerializer',
 
 }
-
-
 
 SIMPLE_JWT = {
      'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
@@ -95,7 +87,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'dj_rest_auth.registration',
     'allauth.socialaccount.providers.google',
-    
+    'django_rest_passwordreset',
 ]
 
 SITE_ID = 1

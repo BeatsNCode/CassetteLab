@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from .models import Artist, Track
 from rest_framework import serializers
-
+from dj_rest_auth.serializers import PasswordResetSerializer
 
 
 AppUser = get_user_model()
@@ -31,7 +31,6 @@ class UserEmailUpdateSerializer(serializers.ModelSerializer):
         return instance
 
 class ArtistSerializer(serializers.ModelSerializer):
-    # user_id = serializers.IntegerField(source='user', read_only=True)
     user = UserSerializer
 
     class Meta:
@@ -50,3 +49,6 @@ class TrackSerializer(serializers.ModelSerializer):
         fields = ['track_id', 'title', 'stage_name', 'audio_file', 'duration', 'plays',]
 
 
+class CustomPasswordResetSerializer(PasswordResetSerializer):
+    def get_email_options(self):
+        return super().get_email_options()
