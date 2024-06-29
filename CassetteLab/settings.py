@@ -127,6 +127,15 @@ WSGI_APPLICATION = 'CassetteLab.wsgi.application'
 
 
 SENDGRID_API_KEY = os.getenv('SENDGRID_API_KEY')
+DJANGO_REST_MULTITOKENAUTH_RESET_TOKEN_EXPIRY_TIME = 0.25
+
+DJANGO_REST_PASSWORDRESET_TOKEN_CONFIG = {
+    "CLASS": "django_rest_passwordreset.tokens.RandomNumberTokenGenerator",
+        "OPTIONS": {
+        "min_length": 6,
+        "max_length": 7
+    }
+}
 
 EMAIL_BACKEND = 'sendgrid_backend.SendgridBackend'
 DEFAULT_FROM_EMAIL = 'info@cassette-lab.com'
@@ -141,7 +150,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
